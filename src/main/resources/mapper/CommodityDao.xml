@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.dao.CommodityDao">
+    <resultMap type="com.learn.entity.Commodity" id="commodityMap">
+        <id column="id" property="id"/>
+        <result column="description" property="description"/>
+        <result column="price" property="price"/>
+        <result column="type" property="type"/>
+        <result column="image" property="image"  jdbcType="BLOB"/>
+    </resultMap>
+
+    <select id="queryByCategory"  resultMap="commodityMap">
+        select id, description , price , image , type
+        from commodity where type = #{category} ;
+    </select>
+
+</mapper>
