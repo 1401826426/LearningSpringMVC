@@ -1,0 +1,19 @@
+<script type="text/javascript" src="/js/bootstrap-filestyle.min.js">
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7 col-sm-offset-2">
+            <input type="file" file-model="myFile" class="filestyle" data-buttonName="btn-primary">
+        </div>
+        <div class="col-sm-2" style="margin-left:0px;padding-left:0px">
+            <button class = "btn btn-success" ng-click="search()">检索图像</button>
+        </div>
+    </div>
+    <div class="row" style = "padding-top:30px;margin-top:20px;background-color:#f3f3f3" >
+        <div class="col-sm-3 col-md-3" ng-repeat="img in imgs">
+            <div class="thumbnail">
+                <img src={{img}} class="imrounded" style="height:230px;width:230px;">
+            </div>
+        </div>
+    </div>
+</div>

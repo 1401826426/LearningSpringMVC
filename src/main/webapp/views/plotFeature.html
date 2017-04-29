@@ -1,0 +1,59 @@
+<!--<input type="file" file-model="myFile" >-->
+<script type="text/javascript" src="/js/bootstrap-filestyle.min.js">
+</script>
+    <!--<div class="row">-->
+        <!--<div class="col-md-offset-2 col-md-8">-->
+            <!--<input type="file" file-model="myFile" class="filestyle" data-buttonName="btn-primary">-->
+            <!--<button ng-click="save()">保存</button>-->
+        <!--</div>-->
+    <!--</div>-->
+<h2 style="text-align: center;">sift图像分析</h2>
+<div class="container" style="background-color: #F3F3F3">
+    <div class="col-md-6" style="padding-top: 15px">
+        <div class="row" >
+            <div class="col-sm-9">
+                <input type="file" file-model="myFile" class="filestyle" data-buttonName="btn-primary">
+            </div>
+            <div class="col-sm-2" style="margin-left:0px;padding-left:0px">
+                <button class = "btn btn-success" ng-click="plotFeature()">画特征图</button>
+            </div>
+        </div>
+        <div class="row" style = "margin-top:50px;" >
+            <div class="col-sm-6">
+                <img src={{img1}} class="imrounded" style="height:230px;width:230px;">
+            </div>
+            <div class="col-sm-6">
+                <img src={{img2}} class="imrounded" style="height:230px;width:230px;">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="border-left:2px solid #ffffff;padding-top: 15px">
+        <div class="row">
+            <div class="col-sm-5">
+                <input type="file" file-model="myFile" id = "img3" class="filestyle"
+                       data-buttonName="btn-primary" data-size="sm">
+            </div>
+            <div class="col-sm-5" >
+                <input type="file" file-model="myFile" id = "img4" class="filestyle"
+                       data-buttonName="btn-primary" data-size="sm">
+            </div>
+            <div class="col-sm-2" >
+                <button class = "btn btn-success" ng-click="plotMatch()">画匹配图</button>
+            </div>
+        </div>
+        <div class="row" style = "margin-top:50px;" >
+            <div class="col-sm-6">
+                <img src={{img3}} class="imrounded" style="height:230px;width:230px;">
+            </div>
+            <div class="col-sm-6">
+                <img src={{img4}} class="imrounded" style="height:230px;width:230px;">
+            </div>
+        </div>
+        <div class="row" style = "margin-top:50px;" >
+            <div class="col-sm-12">
+                <img src={{img5}} class="imrounded" style="height:230px;width:460px;padding-left:55px">
+            </div>
+        </div>
+    </div>
+
+</div>

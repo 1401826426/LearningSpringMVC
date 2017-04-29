@@ -1,10 +1,13 @@
 package com.learn.util;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * Created by pengfei on 2017/3/11.
  */
+@Data
 public class Response<T> implements Serializable {
 
     private ResponseStatus status ;

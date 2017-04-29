@@ -11,9 +11,54 @@
         <result column="image" property="image"  jdbcType="BLOB"/>
     </resultMap>
 
+    <resultMap id="imageMap" type="com.learn.entity.Image">
+        <result column="image" property="image" jdbcType="BLOB" />
+        <result column="id" property="id" />
+    </resultMap>
+
     <select id="queryByCategory"  resultMap="commodityMap">
         select id, description , price , image , type
         from commodity where type = #{category} ;
     </select>
 
+    <select id="queryImage" resultMap="imageMap">
+        select image from commodity where id = #{id} ;
+    </select>
+
+    <select id="queryByCategoryWithPage" resultMap="commodityMap">
+        select id , description , price ,type from commodity where type = #{type}
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="queryAll" resultMap="commodityMap">
+        select id , description , price ,type from commodity
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="queryNum" resultType="java.lang.Integer">
+        select count(id) from commodity where type = #{type};
+    </select>
+
+    <select id="queryAllNum" resultType="java.lang.Integer">
+        select count(id) from commodity ;
+    </select>
+
+    <select id="getAllType" resultType="java.lang.String" >
+        select distinct type from commodity ;
+    </select>
+
+    <delete id="delete" flushCache="true">
+        delete from commodity where id = #{id} ;
+    </delete>
+
 </mapper>
+
+
+
+
+
+
+
+
+
+

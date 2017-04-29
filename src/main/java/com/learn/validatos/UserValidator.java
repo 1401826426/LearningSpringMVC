@@ -17,7 +17,6 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User)o ;
         if(user.getUsername() == null || user.getUsername().length() < 8){
-//            errors.rejectValue("username" , "username的个数小于8");
         }
     }
 }

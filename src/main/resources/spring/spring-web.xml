@@ -17,19 +17,19 @@
     -->
     <mvc:annotation-driven />
 
-    <!--
+     <!--
         1) 静态默认servlet配置
            1:加入静态资源处理:js , gif  ,png
            2:使用/作整体映射
     -->
-   <mvc:default-servlet-handler />
+     <mvc:default-servlet-handler />
 
-
-    <!-- 3:配置jsp 显示viewResolver -->
+        <!-- 3:配置jsp 显示viewResolver -->
     <bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value = "org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix"  value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp" />
+        <!--<property name="prefix"  value="/WEB-INF/jsp/"/>-->
+        <property name="prefix"  value="/"/>
+        <property name="suffix" value=".html" />
     </bean>
 
     <bean id = "multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
