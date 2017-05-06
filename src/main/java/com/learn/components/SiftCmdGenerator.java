@@ -85,10 +85,12 @@ public class SiftCmdGenerator {
     public File match(File img1 , File img2){
         String imgName1 = img1.getName() ;
         String imgName2 = img2.getName() ;
-        String match_name = imgName1.substring(0,imgName1.lastIndexOf("."))
+        String match_name = img1.getParentFile().getAbsolutePath() + File.separator
+                + imgName1.substring(0,imgName1.lastIndexOf("."))
                 + "_" + imgName2.substring(0 , imgName2.lastIndexOf("."))
                 + ".jpg" ;
-        String cmd = PLOT_MATCH + " " + imgName1 + " " + imgName2 + " " + match_name ;
+        String cmd = PLOT_MATCH + " " + img1.getAbsolutePath() + " " + img2.getAbsolutePath() +
+                " " + match_name ;
         String result = socketSender.send(url , port , cmd , DEFAULT_PLOT_MATCH_TIMEOUT) ;
         if(result == null || !SUCCESS.equals(result)){
             return null ;

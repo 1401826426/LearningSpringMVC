@@ -49,9 +49,23 @@ public class ImageResourceManager implements InitializingBean , DisposableBean{
         return bytes ;
     }
 
+
     public void destroy() throws Exception {
         File file = new File(TMP) ;
+        deleteFile(file) ;
         if(file.exists()) file.delete() ;
+    }
+
+    private void deleteFile(File root) {
+        if(root.exists() && root.isFile()) {
+            root.delete();
+            return;
+        }
+        for(File file : root.listFiles()){
+            deleteFile(file);
+        }
+        if(root.exists())
+            root.delete() ;
     }
 }
 

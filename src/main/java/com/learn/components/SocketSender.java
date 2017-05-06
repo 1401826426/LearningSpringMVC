@@ -50,17 +50,21 @@ public class SocketSender {
             OutputStream os = socket.getOutputStream() ;
             os.write((cmd + "\n").getBytes());
             os.write((EOF + "\n").getBytes());
+            os.flush();
         }
 
         private String readValue() throws IOException {
             InputStream is = socket.getInputStream() ;
             Scanner in = new Scanner(is) ;
             StringBuilder sb = new StringBuilder("") ;
+            boolean flag = false ;
             while(in.hasNext()){
                 String s = in.nextLine() ;
                 if(EOF.equals(s))
                     break ;
-                sb.append(s + "\n") ;
+                if(flag)sb.append("\n") ;
+                flag = true ;
+                sb.append(s) ;
             }
             return sb.toString() ;
         }
