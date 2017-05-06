@@ -18,29 +18,29 @@ public class CrawServiceImpl implements CrawService{
     private static final Logger log = LoggerFactory.getLogger(CrawServiceImpl.class) ;
     private static final String CONN_URL = "localhost" ;
     private static final int port = 10000 ;
+    private static final int DEFAULT_CRAW_TIMEOUT = 600 ;
     public String craw(String url, String type) {
         int index = url.indexOf("?") ;
-        String pureUrl = url.substring(0 , index) ;
-        String paramUrl = url.substring(index+1) ;
-        String[] params = paramUrl.split("&") ;
-        boolean flag =  false ;
-        for(String param:params){
-            if(param.indexOf("/") == -1){
-                if(flag)pureUrl += "&" ;
-                else pureUrl += "?" ;
-                pureUrl += param ;
-                flag = true ;
+        String pureUrl = url ;
+        if(index != -1) {
+            pureUrl = url.substring(0, index);
+            String paramUrl = url.substring(index + 1);
+            String[] params = paramUrl.split("&");
+            boolean flag = false;
+            for (String param : params) {
+                if (param.indexOf("/") == -1) {
+                    if (flag) pureUrl += "&";
+                    else pureUrl += "?";
+                    pureUrl += param;
+                    flag = true;
 
+                }
             }
         }
         String cmd = pureUrl + "\t" + type ;
-        try {
-            return  socketSender.send(CONN_URL , port , cmd);
-        } catch (IOException e) {
-            log.error("爬虫连接出错" ,e);
-        }
-        return null ;
+        return  socketSender.send(CONN_URL , port , cmd , DEFAULT_CRAW_TIMEOUT);
     }
+
 }
 
 

@@ -30,6 +30,15 @@ public class ImageController {
     CommodityService imageService ;
     private Log log = LogFactory.getLog(this.getClass()) ;
 
+    /**
+     * @api {post} /image/upload
+     * @apiParam {File} image 要传入的文件
+     * @apiParam {String} category  类别
+     * @apiGroup image
+     * @param image
+     * @param category
+     * @return
+     */
     @RequestMapping(value = "/upload" , method = RequestMethod.POST)
     @ResponseBody
     public Response upload(@RequestParam("image")MultipartFile image , @RequestParam("category") String category){
@@ -51,12 +60,26 @@ public class ImageController {
         }
     }
 
+    /** @api {get} /image/:category 查询当前类别下的所有图像
+     * @apiParam {String} category类别
+     * @apiGroup image
+     * @param category
+     * @return
+     */
     @RequestMapping(value = "/{category}" , method = RequestMethod.GET)
     @ResponseBody
     public Response getImagesByCategory(@PathVariable("category") String category){
         return new Response(ResponseStatus.SUCCESS , "请求成功" , imageService.getImages(category)) ;
     }
 
+    /**
+     * @api {get} /image/id/:id  获取对应id的图片
+     * @apiParam {String} id
+     * @apiGroup image
+     * @param response
+     * @param id
+     * @throws IOException
+     */
     @RequestMapping(value = "/id/{id}" , method = RequestMethod.GET)
     public void getImage(HttpServletResponse response , @PathVariable("id") String id) throws IOException {
         response.setContentType("image/png");
@@ -67,6 +90,12 @@ public class ImageController {
         os.write(bytes , 0,bytes.length);
     }
 
+    /**
+     * @api {delete} /image/id/:id 删除对应id的图片
+     * @apiGroup image
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/id/{id}" , method = RequestMethod.DELETE)
     @ResponseBody
     public Response deleteImage(@PathVariable("id") String id){
@@ -74,6 +103,15 @@ public class ImageController {
         return new Response(ResponseStatus.SUCCESS , "删除成功") ;
     }
 
+    /**
+     * @api {get} /image/type/:type/page/:page  获取对应类型的第几页商品
+     * @apiParam {String} type  类型
+     * @apiParam {Number} page 页数
+     * @apiGroup image
+     * @param type
+     * @param page
+     * @return
+     */
     @RequestMapping(value = "/type/{type}/page/{page}" , method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -88,6 +126,11 @@ public class ImageController {
 
     }
 
+    /**
+     * @api {get} /image/types  获取所有的商品类型
+     * @apiGroup image
+     * @return
+     */
     @RequestMapping(value="/types" , method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody

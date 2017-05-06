@@ -31,12 +31,20 @@ public class ImagePlotController {
     @Autowired
     private ImagePlotService imagePlotService;
 
+    /**
+     * @api {post} /plot/feature 绘制特征点图
+     * @apiParam {File} image  图像文件
+     * @apiGroup plot
+     * @param image
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/feature", method = RequestMethod.POST)
     @ResponseBody
     public Response plotFeature(@RequestParam("image") MultipartFile image,  HttpSession session) {
         List<byte[]> imgs  ;
         try {
-            imgs = imagePlotService.printFeature(image);
+            imgs = imagePlotService.printFeatureV2(image);
         } catch (IOException e) {
             log.error("畫特征點出錯"  , e);
             return new Response(ResponseStatus.FAILURE , "內部出錯") ;
@@ -51,6 +59,16 @@ public class ImagePlotController {
     }
 
 
+    /**
+     * @api {post} /plot/match 绘制匹配图片
+     * @apiParam {File} image1 第一幅图像
+     * @apiParam {File} image2 第二幅图像
+     * @apiGroup plot
+     * @param image1
+     * @param image2
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/match" , method = RequestMethod.POST)
     @ResponseBody
     public Response plotMatch(@RequestParam("image1") MultipartFile image1 ,
@@ -58,7 +76,7 @@ public class ImagePlotController {
                               HttpSession session) {
         List<byte[]> images ;
         try {
-            images = imagePlotService.printMatch(image1 , image2);
+            images = imagePlotService.printMatchV2(image1 , image2);
         } catch (IOException e) {
             log.error(session.getId() + "画匹配图出错");
             return new Response(ResponseStatus.FAILURE , "画图出错") ;
@@ -73,6 +91,16 @@ public class ImagePlotController {
     }
 
 
+    /**
+     * @api /plot/image/:img/:refresh  获取画出的图片
+     * @apiParam {String} img 绘制图片的id
+     * @apiParam {String} refresh 刷新的地址
+     * @apiGroup plot
+     * @param img
+     * @param reresh
+     * @param response
+     * @param session
+     */
     @RequestMapping(value = "/image/{img}/{refresh}" , method = RequestMethod.GET )
     public void getImage(@PathVariable("img") String img ,
                          @PathVariable("refresh") String reresh ,

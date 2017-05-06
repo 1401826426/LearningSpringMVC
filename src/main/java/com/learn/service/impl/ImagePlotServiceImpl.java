@@ -1,5 +1,6 @@
 package com.learn.service.impl;
 
+import com.learn.components.SiftCmdGenerator;
 import com.learn.components.SocketSender;
 import com.learn.service.ImagePlotService;
 import com.learn.components.ImageResourceManager;
@@ -20,10 +21,11 @@ public class ImagePlotServiceImpl implements ImagePlotService {
 
 
     @Autowired  private SocketSender socketSender ;
-    @Autowired private  ImageResourceManager imageResourceManager ;
-
+    @Autowired  private ImageResourceManager imageResourceManager ;
+    @Autowired  private SiftCmdGenerator siftCmdGenerator ;
     private final static int MAX_TRY = 5 ;
 
+    @Deprecated
     public List<byte[]> printFeature(MultipartFile image) throws IOException {
         String name = UUID.randomUUID().toString() +  image.getOriginalFilename() ;
         String outName = UUID.randomUUID().toString() + image.getOriginalFilename() ;
@@ -47,6 +49,7 @@ public class ImagePlotServiceImpl implements ImagePlotService {
         return null;
     }
 
+    @Deprecated
     public List<byte[]> printMatch(MultipartFile img1, MultipartFile img2) throws IOException {
         String name1 = UUID.randomUUID() + img1.getOriginalFilename() ;
         String name2 = UUID.randomUUID() + img2.getOriginalFilename() ;
@@ -73,9 +76,33 @@ public class ImagePlotServiceImpl implements ImagePlotService {
         return null;
     }
 
+    public List<byte[]> printMatchV2(MultipartFile img1, MultipartFile img2) throws IOException {
+        String name1 = UUID.randomUUID() + img1.getOriginalFilename() ;
+        String name2 = UUID.randomUUID() + img2.getOriginalFilename() ;
+        File image1 = imageResourceManager.writeImage(img1.getBytes() , name1) ;
+        File image2 = imageResourceManager.writeImage(img2.getBytes() , name2) ;
+        File match = siftCmdGenerator.match(image1 , image2) ;
+        if(match == null)return null ;
+        List<byte[]> bytes = new ArrayList<byte[]>() ;
+        bytes.add(imageResourceManager.getBytes(image1.getName())) ;
+        bytes.add(imageResourceManager.getBytes(image2.getName())) ;
+        bytes.add(imageResourceManager.getBytes(match.getName())) ;
+        return bytes ;
+    }
 
-
-
+    public List<byte[]> printFeatureV2(MultipartFile image) throws IOException {
+        String name = UUID.randomUUID().toString() +  image.getOriginalFilename() ;
+        File img = imageResourceManager.writeImage(image.getBytes() , name) ;
+        File feature = siftCmdGenerator.plotFeature(img) ;
+        if(feature == null)
+            return null ;
+        List<byte[]> result = new ArrayList<byte[]>() ;
+        byte[] imgBytes = imageResourceManager.getBytes(img.getName()) ;
+        byte[] featureBytes = imageResourceManager.getBytes(feature.getName()) ;
+        result.add(imgBytes) ;
+        result.add(featureBytes) ;
+        return result ;
+    }
 
 }
 

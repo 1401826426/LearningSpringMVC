@@ -14,7 +14,7 @@ public interface CommodityDao {
 
     List<Commodity> queryByCategory(@Param("category") String category) ;
 
-     Image queryImage(@Param("id") String id) ;
+    Image queryImage(@Param("id") String id) ;
 
     List<Commodity> queryByCategoryWithPage(@Param("type") String type, @Param("offset") int offset,@Param("limit") int limit);
 

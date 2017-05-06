@@ -21,12 +21,30 @@ public class ImageCrawlerController {
     @Autowired
     private CrawService crawService ;
 
+    /**
+     * @api {post}  /craw  爬取图片
+     * @apiParam {String} url 爬取的url地址
+     * @apiParam {String} type 爬取的类型
+     * @apiGroup craw
+     * @param url
+     * @param type
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.GET)
     public Response craw(@RequestParam("url") String url, @RequestParam("type") String type){
         return new Response(ResponseStatus.SUCCESS , "成功" ,crawService.craw(url , type)) ;
     }
 
+
+    /**
+     * @api {post}  /craw/v2  爬取图片
+     * @apiParam {String} url 爬取的url地址
+     * @apiParam {String} type 爬取的类型
+     * @apiGroup craw
+     * @param data
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value =  "/v2" , method = RequestMethod.POST)
     public Response crawV2(@RequestBody Map<String,String> data){

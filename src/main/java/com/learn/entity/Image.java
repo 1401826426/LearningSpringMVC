@@ -1,8 +1,11 @@
 package com.learn.entity;
+
+import lombok.Data;
+
 /**
  * Created by pengfei on 2017/4/22.
  */
-//@Data
+@Data
 public class Image {
 
     private String id ;

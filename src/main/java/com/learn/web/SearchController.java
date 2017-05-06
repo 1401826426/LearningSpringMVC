@@ -25,6 +25,14 @@ public class SearchController {
 
     private static final Logger log = LoggerFactory.getLogger(SearchController.class) ;
     @Autowired private SearchService searchService ;
+
+    /**
+     * @api {post} /search/sift  通过sift算法检索图像
+     * @apiParam {File} image  图像
+     * @apiGroup search
+     * @param image
+     * @return
+     */
     @RequestMapping(value = "/sift" , method = RequestMethod.POST)
     @ResponseBody
     public Response search(@RequestParam("image") MultipartFile image){
@@ -35,8 +43,6 @@ public class SearchController {
             return new Response(ResponseStatus.SUCCESS , "内部出错") ;
         }
     }
-
-
 
 }
 

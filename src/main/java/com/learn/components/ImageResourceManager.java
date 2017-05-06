@@ -9,6 +9,11 @@ import java.io.*;
 /**
  * Created by pengfei on 2017/4/26.
  */
+
+/**
+ * ImageResourceManager主要是对图像文件的处理，在画图时主要是用来处理绘制
+ * 好的图片
+ */
 @Component
 public class ImageResourceManager implements InitializingBean , DisposableBean{
 

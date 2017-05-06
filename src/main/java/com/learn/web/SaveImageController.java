@@ -20,6 +20,16 @@ public class SaveImageController {
 
     @Autowired private SaveImageSerive saveImageSerive ;
 
+
+    /**
+     * @api /save  将数据库的图像文件存在对应的位置
+     * @apiParam {Number} num 每种类型存的个数
+     * @apiParam {String} pos 图像存的位置
+     * @apiGroup save
+     * @param num
+     * @param pos
+     * @return
+     */
     @RequestMapping("/save")
     @ResponseBody
     public Response save(@RequestParam("num") int num , @RequestParam("pos") String pos){
