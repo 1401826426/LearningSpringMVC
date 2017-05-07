@@ -24,7 +24,6 @@ public class ImagePlotServiceImpl implements ImagePlotService {
     @Autowired  private ImageResourceManager imageResourceManager ;
     @Autowired  private SiftCmdGenerator siftCmdGenerator ;
     private final static int MAX_TRY = 5 ;
-
     @Deprecated
     public List<byte[]> printFeature(MultipartFile image) throws IOException {
         String name = UUID.randomUUID().toString() +  image.getOriginalFilename() ;
@@ -88,6 +87,20 @@ public class ImagePlotServiceImpl implements ImagePlotService {
         bytes.add(imageResourceManager.getBytes(image2.getName())) ;
         bytes.add(imageResourceManager.getBytes(match.getName())) ;
         return bytes ;
+    }
+
+    public List<byte[]> printColorHist(MultipartFile image) throws IOException {
+        String name = UUID.randomUUID().toString() +  image.getOriginalFilename() ;
+        File img = imageResourceManager.writeImage(image.getBytes() , name) ;
+        File feature = siftCmdGenerator.plotHist(img) ;
+        if(feature == null)
+            return null ;
+        List<byte[]> result = new ArrayList<byte[]>() ;
+        byte[] imgBytes = imageResourceManager.getBytes(img.getName()) ;
+        byte[] featureBytes = imageResourceManager.getBytes(feature.getName()) ;
+        result.add(imgBytes) ;
+        result.add(featureBytes) ;
+        return result ;
     }
 
     public List<byte[]> printFeatureV2(MultipartFile image) throws IOException {

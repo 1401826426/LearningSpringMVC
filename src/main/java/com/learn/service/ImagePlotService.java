@@ -20,4 +20,6 @@ public interface ImagePlotService {
     List<byte[]> printFeatureV2(MultipartFile image) throws IOException;
 
     List<byte[]> printMatchV2(MultipartFile img1 , MultipartFile img2) throws IOException;
+
+    List<byte[]> printColorHist(MultipartFile image) throws IOException;;
 }

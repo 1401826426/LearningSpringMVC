@@ -81,8 +81,11 @@ app.controller("plotFeature" , function ($scope , $http) {
     $scope.img3 = "/img/default.jpg" ;
     $scope.img4 = "/img/default.jpg" ;
     $scope.img5 = "/img/default.jpg" ;
+    $scope.img6 = "/img/default.jpg" ;
+    $scope.img7 = "/img/default.jpg" ;
     $scope.refresh1 = 1 ;
     $scope.refresh2 = 1 ;
+    $scope.refresh3 = 1 ;
 
     function save(fd , url , callback) {
         // var fd = new FormData();
@@ -110,7 +113,7 @@ app.controller("plotFeature" , function ($scope , $http) {
 
     $scope.plotFeature = function(){
         var fd = new FormData() ;
-        var file = document.querySelector('input[type=file]').files[0];
+        var file = document.querySelector('input[id=img1]').files[0];
         console.log(file) ;
         fd.append("image" , file) ;
         save(fd , "/plot/feature" ,function () {
@@ -118,8 +121,20 @@ app.controller("plotFeature" , function ($scope , $http) {
             $scope.img1 = "/plot/image/img1/" + $scope.refresh1;
             $scope.img2 = "/plot/image/img2/" + $scope.refresh1;
         }) ;
-
     }
+
+    $scope.plotHist = function(){
+        var fd = new FormData() ;
+        var file = document.querySelector('input[id=img2]').files[0];
+        console.log(file) ;
+        fd.append("image" , file) ;
+        save(fd , "/plot/hist" ,function () {
+            $scope.refresh3 = 1 + $scope.refresh3 ;
+            $scope.img6 = "/plot/image/img6/" + $scope.refresh3;
+            $scope.img7 = "/plot/image/img7/" + $scope.refresh3;
+        }) ;
+    }
+
 
     $scope.plotMatch = function(){
         var fd = new FormData() ;

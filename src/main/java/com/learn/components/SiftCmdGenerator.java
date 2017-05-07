@@ -18,6 +18,8 @@ public class SiftCmdGenerator {
 
     private final static String PLOT_FEATURE = "1" ;
 
+    private final static int DEFAULT_PLOT_FEATURE_TIMEOUT = 60 ;
+
     private final static String PLOT_MATCH = "3" ;
 
     private final static int DEFAULT_PLOT_MATCH_TIMEOUT = 60 ;
@@ -25,6 +27,11 @@ public class SiftCmdGenerator {
     private final static String SEARCH = "4 F:\\images" ;
 
     private final static int DEFAULT_SEARCH_TIMEOUT = 1000 ;
+
+    private final static String HIST = "5" ;
+
+    private final static int DEFAULT_PLOT_HIST_TIMEOUT = 50 ;
+
 
     private final static String url = "localhost" ;
 
@@ -39,7 +46,7 @@ public class SiftCmdGenerator {
         String featurePath = image.getParentFile().getAbsolutePath()
                 + File.separator + UUID.randomUUID() + ".jpg" ;
         String cmd = PLOT_FEATURE + " " + imagePath + " " + featurePath ;
-        String result = socketSender.send(url , port , cmd , 10) ;
+        String result = socketSender.send(url , port , cmd , DEFAULT_PLOT_FEATURE_TIMEOUT) ;
         if(SUCCESS.equals(result))
             return new File(featurePath) ;
         return null ;
@@ -98,6 +105,16 @@ public class SiftCmdGenerator {
         return new File(match_name) ;
     }
 
+    public File plotHist(File img) {
+        String imagePath = img.getAbsolutePath() ;
+        String histPath = img.getParentFile().getAbsolutePath()
+                + File.separator + UUID.randomUUID() + ".jpg" ;
+        String cmd = HIST + " " + imagePath + " " + histPath ;
+        String result = socketSender.send(url , port , cmd , 20) ;
+        if(SUCCESS.equals(result))
+            return new File(histPath) ;
+        return null ;
+    }
 }
 
 

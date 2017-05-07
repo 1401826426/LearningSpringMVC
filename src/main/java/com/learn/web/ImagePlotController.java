@@ -59,6 +59,25 @@ public class ImagePlotController {
     }
 
 
+    @RequestMapping(value = "/hist" , method = RequestMethod.POST)
+    @ResponseBody
+    public Response plotColorHist(@RequestParam("image") MultipartFile image,  HttpSession session) {
+        List<byte[]> imgs  ;
+        try {
+            imgs = imagePlotService.printColorHist(image);
+        } catch (IOException e) {
+            log.error("畫特征點出錯"  , e);
+            return new Response(ResponseStatus.FAILURE , "內部出錯") ;
+        }
+        if(imgs == null || imgs.size() < 2){
+            return new Response(ResponseStatus.FAILURE , "内部出错") ;
+        }
+        session.setAttribute("img6", imgs.get(0));
+        session.setAttribute("img7", imgs.get(1));
+        session.setAttribute("refresh" , image.hashCode());
+        return new Response(ResponseStatus.SUCCESS, "畫圖成功");
+    }
+
     /**
      * @api {post} /plot/match 绘制匹配图片
      * @apiParam {File} image1 第一幅图像
@@ -105,7 +124,7 @@ public class ImagePlotController {
     public void getImage(@PathVariable("img") String img ,
                          @PathVariable("refresh") String reresh ,
                          HttpServletResponse response , HttpSession session) {
-        log.info(session.getId() + "获取图像" + reresh);
+        log.info(session.getId() + "获取图像" + img + " " + reresh);
         Object obj = session.getAttribute(img) ;
         response.setContentType("image/png");
         if(obj != null && obj instanceof byte[]){
